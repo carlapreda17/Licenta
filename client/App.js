@@ -1,21 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import Login from "./src/pages/Login";
 import SignUp from "./src/pages/SignUp";
-import NewPasswordScreen from "./src/pages/NewPasswordScreen";
-import Navigation from "./src/navigation";
+import Login from "./src/pages/Login";
+import React from "react";
+import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+import ForgetPassword from "./src/pages/ForgetPassword";
+
+const Stack = createStackNavigator();
 export default function App() {
+    const s=require('./styles')
   return (
-      <SafeAreaView style={styles.root}>
-         <Login></Login>
+      <SafeAreaView style={s.root}>
+      <NavigationContainer>
+            <Stack.Navigator  screenOptions={{
+                headerShown: false,
+                cardStyle: { backgroundColor: s.root.backgroundColor },
+                flex: 1
+            }}>
+                <Stack.Screen name="Login" component={Login}/>
+                <Stack.Screen name="SignUp" component={SignUp}/>
+                <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
+            </Stack.Navigator>
+      </NavigationContainer>
       </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-    root:{
-        backgroundColor:'#222831',
-        flex:1,
-
-    }
-})

@@ -5,12 +5,14 @@ import React from "react";
 import {useState} from 'react'
 import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
+import {useNavigation} from "@react-navigation/native";
 
 function SignUp(){
     const[username,setUsername]=useState('')
     const[password,setPassword]=useState('')
     const[email,setEmail]=useState('')
     const windowHeight = useWindowDimensions().height;
+    const navigation = useNavigation()
 
     const onRegisterPressed = () => {
         console.warn('Sign in')
@@ -31,7 +33,7 @@ function SignUp(){
     }
 
     const onCreate = () => {
-        console.warn("HI")
+        navigation.navigate('Login')
     }
 
     return (
