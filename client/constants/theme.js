@@ -7,11 +7,11 @@ const COLORS = {
     white:'#EEEEEE'
 };
 
-// const FONT = {
-//     regular: "",
-//     medium: "DMMedium",
-//     bold: "DMBold",
-// };
+const FONT = {
+    regular: "nunito-regular",
+    medium: "nuinito-medium",
+    bold: "nuinito-bold",
+};
 
 const SIZES = {
     xSmall: 10,
@@ -21,3 +21,5 @@ const SIZES = {
     xLarge: 24,
     xxLarge: 32
 }
+
+export  { COLORS, FONT, SIZES };

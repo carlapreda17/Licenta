@@ -1,6 +1,7 @@
 import React from 'react';
 import {StatusBar, StyleSheet, TextInput, Text, View, TouchableOpacity} from 'react-native';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {FONT} from "../../constants/theme";
 
 function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword }) {
     return (
@@ -38,7 +39,8 @@ const styles = StyleSheet.create({
     },
     input:{
         height:40,
-        fontSize:18
+        fontSize:18,
+        fontFamily:FONT.regular
     },
     icon: {
         position: 'absolute',

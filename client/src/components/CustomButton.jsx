@@ -1,5 +1,5 @@
 import {Button, View, StyleSheet, Text, Pressable, TouchableOpacity} from "react-native";
-
+import {FONT} from "../../constants/theme";
 function CustomButton({onPress, text, type='primary'}) {
     return (
         <TouchableOpacity style={[styles.container, styles[`container_${type}`]]} onPress={onPress}>
@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
 
     },
     text:{
-        color:'#EEEEEE'
+        color:'#EEEEEE',
+        fontFamily:FONT.regular
     },
     text_primary:{
         color:'#222831',
-        fontWeight:'bold',
-        fontSize:18
+        fontFamily:FONT.bold,
+        fontSize:18,
     },
     text_link: {
         fontSize:14,
