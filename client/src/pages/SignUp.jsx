@@ -6,20 +6,38 @@ import {useState} from 'react'
 import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios";
 
 function SignUp(){
     const[username,setUsername]=useState('')
     const[password,setPassword]=useState('')
     const[email,setEmail]=useState('')
+    const[phone,setPhone]=useState('')
     const windowHeight = useWindowDimensions().height;
     const navigation = useNavigation()
 
-    const onRegisterPressed = () => {
-        console.warn('Sign in')
-    }
-    const onForgotPasswordPressed = () =>{
+        const onRegisterPressed = async () => {
+            const userData = {
+                username: username,
+                parola: password,
+                email: email,
+                telefon: phone,
+            };
+            try {
+                const response = await axios.post('http://192.168.100.64:8085/users/signUp', userData);
+                if(response.status===201)
+                {
+                    navigation.navigate('Login')
+                }
+                else{
+                    console.warn('Failed to register')
+                }
 
-    }
+            } catch(error) {
+                console.log('Registration failed', error);
+            }
+        }
+
 
     const onSignInFacebook = () => {
 
@@ -45,6 +63,7 @@ function SignUp(){
                 <CustomInput placeholder="Username" value={username} setValue={setUsername}></CustomInput>
                 <CustomInput placeholder="Email" value={email} setValue={setEmail}></CustomInput>
                 <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={true}></CustomInput>
+                <CustomInput placeholder="Phone number" value={phone} setValue={setPhone}></CustomInput>
                 <CustomButton text={'Register'} onPress={onRegisterPressed}></CustomButton>
 
                 <View style={styles.margin_top}>
