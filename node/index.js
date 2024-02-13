@@ -9,7 +9,9 @@ app.use(cors({
 
 
 const userRoutes = require('./server/userRoutes');
+const authRoutes = require('./server/authRoutes');
 app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 app.listen(8085, ()=> {
     console.log('Server listening on port 8085');

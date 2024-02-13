@@ -1,12 +1,28 @@
 import React from 'react';
-import { StatusBar, StyleSheet,TextInput, Text, View } from 'react-native';
+import {StatusBar, StyleSheet, TextInput, Text, View, TouchableOpacity} from 'react-native';
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-function Input({value,setValue, placeholder,secureTextEntry}) {
-  return (
-    <View style={styles.container}>
-      <TextInput value={value} onChangeText={setValue} style={styles.input} placeholder={placeholder} secureTextEntry={secureTextEntry}></TextInput>
-    </View>
-  );
+function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword }) {
+    return (
+        <View style={styles.container}>
+            <TextInput
+                value={value}
+                onChangeText={setValue}
+                style={styles.input}
+                placeholder={placeholder}
+                secureTextEntry={secureTextEntry}
+            />
+            {placeholder.toLowerCase().includes('password') && (
+                <MaterialCommunityIcons
+                    name={secureTextEntry ? 'eye-off' : 'eye'}
+                    size={24}
+                    color="#000"
+                    style={styles.icon}
+                    onPress={onToggleShowPassword}
+                />
+            )}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -23,6 +39,14 @@ const styles = StyleSheet.create({
     input:{
         height:40,
         fontSize:18
+    },
+    icon: {
+        position: 'absolute',
+        right: 10,
+        top: '50%',
+        transform: [{ translateY: -12 }],
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });
 

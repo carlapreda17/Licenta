@@ -8,49 +8,54 @@ const Utilizator = require('../database/models/Utilizator');
 router.post('/signUp', async (req, res) => {
     try {
         const {username, parola, email, telefon} = req.body;
-        console.log(req.body);
 
-        const existaUser = await Utilizator.findOne({
+
+        const existaUserNume = await Utilizator.findOne({
+            where: { username: username }
+        });
+        if (existaUserNume) {
+            return res.status(409).json({ success: false,field:'username', message: "Username already in use." });
+        }
+
+        const existaUserEmail = await Utilizator.findOne({
             where: {
                 'email': email
             }
         });
-        if (existaUser) {
-            return res.status(409).json({success: false, message: "Email already in use."});
+        if (existaUserEmail) {
+            return res.status(409).json({success: false,field:'email', message: "Email already in use."});
         }
 
-        console.log('Password:', parola);
         const salt = bcrypt.genSaltSync(10);
-        console.log('Salt:', salt);
         const hash = bcrypt.hashSync(parola, salt);
-        console.log(hash)
+
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/;
         const phoneRegex = /^07\d{8}$/;
-        const nameRegex = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
+        const nameRegex = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
         const mailRegex = /\S+@\S+\.\S+/;
 
         let errors = [];
 
-        // if (!nameRegex.test(username)) {
-        //     errors.push("Invalid name.");
-        // }
-        //
-        // if (!passwordRegex.test(parola)) {
-        //     errors.push("Invalid password.");
-        // }
-        //
-        // if (!mailRegex.test(email)) {
-        //     errors.push("Invalid email.");
-        // }
-        //
-        // if (!phoneRegex.test(telefon)) {
-        //     errors.push("Invalid phone number.");
-        // }
+         if (!nameRegex.test(username)) {
+           errors.push("Invalid name.");
+         }
 
-        // if (errors.length > 0) {
-        //     return res.status(400).json({success: false, message: "The sent data is invalid.", errors: errors});
-        // }
+        if (!passwordRegex.test(parola)) {
+          errors.push("Invalid password.");
+         }
+
+         if (!mailRegex.test(email)) {
+           errors.push("Invalid email.");
+         }
+
+         if (!phoneRegex.test(telefon)) {
+            errors.push("Invalid phone number.");
+         }
+
+         if (errors.length > 0) {
+             return res.status(400).json({success: false, message: "The sent data is invalid.", errors: errors});
+         }
 
         await Utilizator.create({
             username,

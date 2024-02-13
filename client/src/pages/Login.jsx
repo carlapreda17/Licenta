@@ -1,4 +1,4 @@
-import {Image, ScrollView, StatusBar, StyleSheet, Text, useWindowDimensions, View} from "react-native";
+import {Image, ScrollView, StatusBar, StyleSheet, Text, useWindowDimensions, View,Alert} from "react-native";
 import Logo from '../../assets/images/SplitScreen.png'
 import CustomInput from '../components/Input'
 import React from "react";
@@ -6,16 +6,33 @@ import {useState} from 'react'
 import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios";
 
 function Login(){
     const[username,setUsername]=useState('')
     const[password,setPassword]=useState('')
+    const [showPassword, setShowPassword] = useState(false);
 
     const windowHeight = useWindowDimensions().height;
     const navigation = useNavigation()
-    const onSignInPressed = () => {
-            console.warn('Sign in')
-    }
+    const onSignInPressed = async () => {
+        const loginData = {
+            username: username,
+            parola: password,
+        };
+        try {
+            const response = await axios.post('http://192.168.100.64:8085/auth/login', loginData);
+            if(response.status === 200) {
+                console.log('Login successful', response.data);
+                navigation.navigate('HomePage');
+            }
+        } catch (error) {
+            Alert.alert("Login Failed", "Username or password is incorrect");
+        }
+    };
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     const onForgotPasswordPressed = () =>{
         navigation.navigate('ForgetPassword')
     }
@@ -38,11 +55,11 @@ function Login(){
 
     const {height}=useWindowDimensions()
     return (
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={windowHeight<750}>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
             <Image source={Logo} style={[styles.logo,{height:height * 0.3}]} resizeMode="contain"></Image>
             <CustomInput placeholder="Username" value={username} setValue={setUsername}></CustomInput>
-            <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={true}></CustomInput>
+            <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility}></CustomInput>
             <CustomButton text={'Sign In'} onPress={onSignInPressed}></CustomButton>
             <CustomButton text={'Forgot password?'} onPress={onForgotPasswordPressed} type='link'></CustomButton>
             <SocialMediaButton text={'Sign In with Facebook'} onPress={onSignInFacebook} bgColor={'#E7EAF4'} fgColor={"#4765A9"}></SocialMediaButton>
