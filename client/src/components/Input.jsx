@@ -1,15 +1,24 @@
 import React from 'react';
 import {StatusBar, StyleSheet, TextInput, Text, View, TouchableOpacity} from 'react-native';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {FONT} from "../../constants/theme";
+import {SvgXml} from "react-native-svg";
+import UserSvg from '../../assets/icons/user.svg'
+import styles from "../../styles";
+import {Svg, Path} from "react-native-svg";
+import {COLORS, FONT, SIZES} from "../../constants/theme";
 
-function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword }) {
+
+function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword,type }) {
+
+    const styles=require('../../styles')
+
     return (
-        <View style={styles.container}>
+        <View style={styles.input_container}>
+            <MaterialCommunityIcons name={type} size={24} color={COLORS.background} style={styles.icons_input}></MaterialCommunityIcons>
             <TextInput
                 value={value}
                 onChangeText={setValue}
-                style={styles.input}
+                style={styles.input_text}
                 placeholder={placeholder}
                 secureTextEntry={secureTextEntry}
             />
@@ -17,40 +26,14 @@ function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPass
                 <MaterialCommunityIcons
                     name={secureTextEntry ? 'eye-off' : 'eye'}
                     size={24}
-                    color="#000"
-                    style={styles.icon}
+                    color={COLORS.background}
+                    style={styles.eye_icon}
                     onPress={onToggleShowPassword}
                 />
             )}
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor:'#EEEEEE',
-        width:'100%',
-        borderColor:'#e8e8e8',
-        borderWidth:1,
-        borderRadius:5,
-        paddingHorizontal:10,
-        marginVertical:10,
-
-    },
-    input:{
-        height:40,
-        fontSize:18,
-        fontFamily:FONT.regular
-    },
-    icon: {
-        position: 'absolute',
-        right: 10,
-        top: '50%',
-        transform: [{ translateY: -12 }],
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});
 
 
 export default Input;

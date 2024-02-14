@@ -16,6 +16,7 @@ function Login(){
 
     const windowHeight = useWindowDimensions().height;
     const navigation = useNavigation()
+    const s=require('../../styles')
     const onSignInPressed = async () => {
         const loginData = {
             username: username,
@@ -24,7 +25,6 @@ function Login(){
         try {
             const response = await axios.post('http://192.168.100.64:8085/auth/login', loginData);
             if(response.status === 200) {
-                console.log('Login successful', response.data);
                 navigation.navigate('HomePage');
             }
         } catch (error) {
@@ -39,14 +39,14 @@ function Login(){
     }
 
     const onSignInFacebook = () => {
-
+        console.warn("facebook")
     }
 
     const onSignInGoogle = () => {
-
+        console.warn('google')
     }
     const onSignInApple = () => {
-
+        console.warn('apple')
     }
 
     const onCreate = () => {
@@ -55,15 +55,17 @@ function Login(){
     const {height}=useWindowDimensions()
     return (
         <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={true}>
-            <View style={styles.container}>
+            <View style={s.container}>
                 <Image source={Logo} style={[styles.logo,{height:height * 0.3}]} resizeMode="contain"></Image>
-                <CustomInput placeholder="Username" value={username} setValue={setUsername}></CustomInput>
-                <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility}></CustomInput>
+                <CustomInput placeholder="Username" value={username} setValue={setUsername} type='account'></CustomInput>
+                <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility} type='lock-outline'></CustomInput>
                 <CustomButton text={'Sign In'} onPress={onSignInPressed}></CustomButton>
                 <CustomButton text={'Forgot password?'} onPress={onForgotPasswordPressed} type='link'></CustomButton>
-                <SocialMediaButton text={'Sign In with Facebook'} onPress={onSignInFacebook} bgColor={'#E7EAF4'} fgColor={"#4765A9"}></SocialMediaButton>
-                <SocialMediaButton text={'Sign In with Google'} onPress={onSignInGoogle} bgColor={'#FAE9EA'} fgColor={'#DD4D44'}></SocialMediaButton>
-                <SocialMediaButton text={'Sign In with Apple'} onPress={onSignInApple} bgColor={'#EEEEEE'} fgColor={'#000'}></SocialMediaButton>
+                <View style={styles.container_btns}>
+                    <SocialMediaButton text={'Sign In with Facebook'} onPress={onSignInFacebook} bgColor={'#E7EAF4'} fgColor={"#4765A9"} type='facebook'></SocialMediaButton>
+                    <SocialMediaButton text={'Sign In with Google'} onPress={onSignInGoogle} bgColor={'#FAE9EA'} fgColor={'#DD4D44'} type='google'></SocialMediaButton>
+                    <SocialMediaButton text={'Sign In with Apple'} onPress={onSignInApple} bgColor={'#EEEEEE'} fgColor={'#000'} type='apple'></SocialMediaButton>
+                </View>
                 <View style={styles.container_link}>
                     <Text style={styles.account_text}>Don't have an account?</Text>
                     <CustomButton text={'Create one'} onPress={onCreate} type='small_link'></CustomButton>
@@ -73,16 +75,17 @@ function Login(){
     );
 }
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#222831',
-        alignItems: 'center',
-        padding:20
-    },
     container_link:{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         marginBottom:5
+    },
+    container_btns:{
+        alignItems: "center",
+        justifyContent: "center",
+        width:'100%',
+        marginTop:25
     },
     logo:{
         width:'70%',
@@ -97,7 +100,8 @@ const styles = StyleSheet.create({
         fontSize:12,
         fontWeight:'normal',
         fontFamily:FONT.regular
-    }
+    },
+
 });
 
 export default Login;

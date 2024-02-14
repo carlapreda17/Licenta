@@ -9,20 +9,19 @@ function ForgetPassword(){
     const[password,setPassword]=useState('')
     const[username,setUsername]=useState('')
     const navigation = useNavigation()
+    const s=require('../../styles')
     const onSendPress = () => {
         navigation.navigate('Login')
     }
    const windowHeight= useWindowDimensions().height;
     return (
         <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={windowHeight<750}>
-            <View style={styles.container}>
+            <View style={s.container}>
                 <View style={styles.title_container}>
-                    <Text style={styles.title}>Reset your password</Text>
+                    <Text style={s.title}>Reset your password</Text>
                 </View>
-
-                <Text style={styles.label}>Username</Text>
-                <CustomInput placeholder="Enter your username" value={username} setValue={setUsername}></CustomInput>
-
+                <Text style={s.label}>Username</Text>
+                <CustomInput placeholder="Enter your username" value={username} setValue={setUsername} type='account'></CustomInput>
                 <CustomButton text={'Send'} onPress={onSendPress}></CustomButton>
                 <CustomButton text={'Back to Sign In'} type='link' onPress={onSendPress}></CustomButton>
             </View>
@@ -31,28 +30,8 @@ function ForgetPassword(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#222831',
-        alignItems: 'center',
-        padding:20
-    },
     title_container:{
         alignSelf:'flex-start',
-    },
-    title:{
-        color:'#FFD369',
-        fontSize:24,
-        fontWeight:'bold',
-        marginVertical:20,
-
-
-    },
-    label:{
-        color:'#eee',
-        fontSize:16,
-        fontWeight:'normal',
-        alignSelf:'flex-start',
-        marginVertical:10
     },
 
 });

@@ -8,14 +8,14 @@ import SocialMediaButton from "../components/SocialMediaButton";
 function NewPasswordScreen(){
     const[newPassword,setNewPassword]=useState('')
     const[code,setCode]=useState('')
-
+    const s=require('../../styles')
     const onSubmitPress = () => {
         console.warn('Send')
     }
     const windowHeight= useWindowDimensions().height;
     return (
         <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={windowHeight<750}>
-            <View style={styles.container}>
+            <View style={s.container}>
                 <View style={styles.title_container}>
                     <Text style={styles.title}>Reset your password</Text>
                 </View>
@@ -32,11 +32,7 @@ function NewPasswordScreen(){
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#222831',
-        alignItems: 'center',
-        padding:20
-    },
+
     title_container:{
         alignSelf:'flex-start',
     },

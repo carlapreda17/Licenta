@@ -3,8 +3,9 @@
 # dependencies
 node_modules/
 %ProgramData%
-
+package-lock.json
 # Expo
+
 .expo/
 dist/
 web-build/

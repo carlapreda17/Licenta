@@ -1,26 +1,17 @@
 import {Button, View, StyleSheet, Text, Pressable, TouchableOpacity} from "react-native";
+import s from "../../styles";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-function SocialMediaButton({onPress, text, bgColor,fgColor}) {
+function SocialMediaButton({onPress, text, bgColor,fgColor,type}) {
+    const styles=require('../../styles')
+    const iconSize = type === 'google' ? 35 : 40;
     return (
-        <TouchableOpacity style={[styles.container, {backgroundColor:bgColor}]} onPress={onPress} >
-            <Text style={[styles.text,  {color:fgColor}]}>{text}</Text>
+        <TouchableOpacity style={[styles.social_media_btn_container,styles.btn_container, {backgroundColor:bgColor}]} onPress={onPress} >
+            <MaterialCommunityIcons name={type} size={iconSize} color={fgColor} style={type === 'google' ? [styles.social_icons, styles.social_icons_google] : styles.social_icons}></MaterialCommunityIcons>
+            <Text style={[styles.social_media_btn_text, {color:fgColor}]}>{text}</Text>
         </TouchableOpacity>
 
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        width:'100%',
-        padding:15,
-        marginVertical:10,
-        alignItems:'center',
-        borderRadius:10
-    },
-   text:{
-        fontSize:16,
-        fontWeight:'normal'
-   }
-
-})
 export default SocialMediaButton;

@@ -19,6 +19,7 @@ function SignUp(){
     const navigation = useNavigation()
     // State pentru erori
     const [errors, setErrors] = useState({});
+    const s=require('../../styles')
 
     const validate = () => {
         let isValid = true;
@@ -118,24 +119,24 @@ function SignUp(){
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
-            <View style={styles.container}>
+            <View style={s.container}>
               <View style={styles.title_container}>
-                  <Text style={styles.title}>Create an account</Text>
+                  <Text style={s.title}>Create an account</Text>
               </View>
-                <CustomInput placeholder="Username" value={username} setValue={setUsername} error={errors.username}></CustomInput>
-                {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
-                <CustomInput placeholder="Email" value={email} setValue={setEmail} error={errors.email}></CustomInput>
-                {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-                <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility} error={errors.password}></CustomInput>
-                {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-                <CustomInput placeholder="Phone number" value={phone} setValue={setPhone} error={errors.phone}></CustomInput>
-                {errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+                <CustomInput placeholder="Username" value={username} setValue={setUsername} error={errors.username} type='account'></CustomInput>
+                {errors.username && <Text style={s.errorText}>{errors.username}</Text>}
+                <CustomInput placeholder="Email" value={email} setValue={setEmail} error={errors.email} type='mail'></CustomInput>
+                {errors.email && <Text style={s.errorText}>{errors.email}</Text>}
+                <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility} error={errors.password} type="lock-outline"></CustomInput>
+                {errors.password && <Text style={s.errorText}>{errors.password}</Text>}
+                <CustomInput placeholder="Phone number" value={phone} setValue={setPhone} error={errors.phone} type='phone'></CustomInput>
+                {errors.phone && <Text style={s.errorText}>{errors.phone}</Text>}
                 <CustomButton text={'Register'} onPress={onRegisterPressed}></CustomButton>
 
-                <View style={styles.margin_top}>
-                    <SocialMediaButton text={'Sign In with Facebook'} onPress={onSignInFacebook} bgColor={'#E7EAF4'} fgColor={"#4765A9"}></SocialMediaButton>
-                    <SocialMediaButton text={'Sign In with Google'} onPress={onSignInGoogle} bgColor={'#FAE9EA'} fgColor={'#DD4D44'}></SocialMediaButton>
-                    <SocialMediaButton text={'Sign In with Apple'} onPress={onSignInApple} bgColor={'#EEEEEE'} fgColor={'#000'}></SocialMediaButton>
+                <View style={styles.container_social}>
+                    <SocialMediaButton text={'Sign In with Facebook'} onPress={onSignInFacebook} bgColor={'#E7EAF4'} fgColor={"#4765A9"} type='facebook'></SocialMediaButton>
+                    <SocialMediaButton text={'Sign In with Google'} onPress={onSignInGoogle} bgColor={'#FAE9EA'} fgColor={'#DD4D44'} type='google'></SocialMediaButton>
+                    <SocialMediaButton text={'Sign In with Apple'} onPress={onSignInApple} bgColor={'#EEEEEE'} fgColor={'#000'} type='apple'></SocialMediaButton>
                 </View>
                 <View style={styles.container_link}>
                     <Text style={styles.account_text}>Have an account?</Text>
@@ -146,21 +147,8 @@ function SignUp(){
     );
 }
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#222831',
-        alignItems: 'center',
-        padding:20
-    },
     title_container:{
        alignSelf:'flex-start',
-    },
-    title:{
-        color:'#FFD369',
-        fontSize:24,
-        fontWeight:'bold',
-        marginVertical:20,
-
-
     },
     container_link:{
         flexDirection: "row",
@@ -168,21 +156,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom:5
     },
-
     account_text:{
         color:'#eee',
         fontSize:12,
         fontWeight:'normal'
     },
-    margin_top:{
+    container_social:{
         marginTop:120,
         width:'100%'
     },
-    errorText: {
-        color: 'red',
-        alignSelf: 'flex-start',
-        fontSize: 14,
-    },
+    
 });
 
 export default SignUp;
