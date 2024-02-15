@@ -11,7 +11,10 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import {initializeApp} from "firebase/app";
 import { initializeAuth, getReactNativePersistence} from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
+import * as firebase from "firebase/app";
+import "firebase/firestore"
+import {getFirestore} from "firebase/firestore";
+import {doc, setDoc} from "@firebase/firestore";
 
 
 
@@ -26,6 +29,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db=getFirestore(app)
 const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });
@@ -97,6 +101,7 @@ function SignUp(){
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
                     await sendEmailVerification(userCredential.user);
+                    await setDoc(doc(db, "Users", userCredential.user.uid), userData);
                     console.log('User registered with email:', email);
                     Alert.alert(
                         "Success",
