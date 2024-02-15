@@ -9,7 +9,6 @@ module.exports = StyleSheet.create({
        fontFamily:FONT.regular
    },
     container: {
-        backgroundColor: '#222831',
         alignItems: 'center',
         padding:20
     },
