@@ -118,7 +118,7 @@ function SignUp(){
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
+        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={windowHeight<900}>
             <View style={s.container}>
               <View style={styles.title_container}>
                   <Text style={s.title}>Create an account</Text>

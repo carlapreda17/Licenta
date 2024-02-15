@@ -33,20 +33,18 @@ module.exports = StyleSheet.create({
     social_media_btn_text:{
         fontSize:16,
         fontFamily:FONT.medium,
-
-
     },
     social_media_btn_container:{
         width:'100%',
         padding:15,
         marginVertical:10,
-        justifyContent:'center',
+        justifyContent:'flex-start',
         alignItems: 'center',
         flexDirection: 'row'
-
     },
     btn_container:{
         alignItems:'center',
+        justifyContent:'center',
         borderRadius:10
     },
     container_primary: {
@@ -97,14 +95,6 @@ module.exports = StyleSheet.create({
     social_icons:{
         position: 'absolute',
         left: 10,
-        top: '20%',
-        alignSelf: 'center',
-
-    },
-    social_icons_google:{
-        position: 'absolute',
-        left: 10,
-        top: '25%',
         alignSelf: 'center',
 
     },

@@ -34,7 +34,7 @@ export default function App() {
 
     if(fontsLoaded){
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background,overflow:'scroll',height:'100%'}}>
                 <NavigationContainer>
                     <Stack.Navigator screenOptions={{
                         headerShown: false,

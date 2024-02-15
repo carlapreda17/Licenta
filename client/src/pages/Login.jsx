@@ -54,7 +54,7 @@ function Login(){
     }
     const {height}=useWindowDimensions()
     return (
-        <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={true}>
+        <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={height<750}>
             <View style={s.container}>
                 <Image source={Logo} style={[styles.logo,{height:height * 0.3}]} resizeMode="contain"></Image>
                 <CustomInput placeholder="Username" value={username} setValue={setUsername} type='account'></CustomInput>
