@@ -6,8 +6,30 @@ import {useState} from 'react'
 import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
-import axios from "axios";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import axios from "axios"
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import {initializeApp} from "firebase/app";
+import { initializeAuth, getReactNativePersistence} from 'firebase/auth';
+import { getFirestore, collection, doc, setDoc } from "firebase/firestore";
+
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDWtKGKS5P96YF3DQIpHhw2LY7evGrEJmM",
+    authDomain: "licenta-d0d2c.firebaseapp.com",
+    projectId: "licenta-d0d2c",
+    storageBucket: "licenta-d0d2c.appspot.com",
+    messagingSenderId: "908408780707",
+    appId: "1:908408780707:web:2e61cf2010a2912817cc16"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
+
 
 function SignUp(){
     const[username,setUsername]=useState('')
@@ -70,12 +92,17 @@ function SignUp(){
             };
             try {
                 const response = await axios.post('http://192.168.100.64:8085/users/signUp', userData);
-                if(response.status === 201) {
+                if (response.status === 201) {
+                    const auth = getAuth();
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                    await sendEmailVerification(userCredential.user);
+                    console.log('User registered with email:', email);
                     Alert.alert(
                         "Success",
                         "Your account has been created successfully",
                         [
-                            { text: "OK", onPress: () => navigation.navigate('Login') }
+                            {text: "OK", onPress: () => navigation.navigate('Login')}
                         ]
                     );
                 } else {
@@ -87,7 +114,7 @@ function SignUp(){
                     console.log('Registration failed with status code:', error.response.status);
                     if (error.response.status === 409 && error.response.data.field) {
                         console.log('Error:', error.response.data.field)
-                        setErrors({ ...errors, [error.response.data.field]: error.response.data.message });
+                        setErrors({...errors, [error.response.data.field]: error.response.data.message});
                     }
                 } else if (error.request) {
                     console.log('No response received:', error.request);
@@ -97,6 +124,7 @@ function SignUp(){
             }
         }
     };
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -109,7 +137,7 @@ function SignUp(){
     const onSignInGoogle = () => {
 
     }
-    const onSignInApple = () => {
+    const onSignInApple = async () => {
 
     }
 

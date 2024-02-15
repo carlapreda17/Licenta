@@ -110,7 +110,6 @@ module.exports = StyleSheet.create({
         fontFamily:FONT.medium,
         alignSelf:'flex-start',
         marginTop:10,
-
     },
     errorText: {
         color: COLORS.red,
