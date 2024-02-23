@@ -6,6 +6,7 @@ database/database.sqlite
 package-lock.json
 .env
 
+
 # Expo
 .expo/
 dist/
