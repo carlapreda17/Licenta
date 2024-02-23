@@ -4,6 +4,7 @@
 node_modules/
 %ProgramData%
 package-lock.json
+.env
 # Expo
 
 .expo/

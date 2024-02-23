@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
+const port = process.env.PORT;
 
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://192.168.100.64:8081'
+    origin: process.env.ORIGIN
 }));
 
 
@@ -13,6 +15,6 @@ const authRoutes = require('./server/authRoutes');
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 
-app.listen(8085, ()=> {
-    console.log('Server listening on port 8085');
+app.listen(port, ()=> {
+    console.log(`Server listening on port ${port}`);
 });
