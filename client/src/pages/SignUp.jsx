@@ -7,32 +7,8 @@ import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios"
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import {initializeApp} from "firebase/app";
-import { initializeAuth, getReactNativePersistence} from 'firebase/auth';
-import * as firebase from "firebase/app";
-import "firebase/firestore"
-import {getFirestore} from "firebase/firestore";
-import {doc, setDoc} from "@firebase/firestore";
 
 
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDWtKGKS5P96YF3DQIpHhw2LY7evGrEJmM",
-    authDomain: "licenta-d0d2c.firebaseapp.com",
-    projectId: "licenta-d0d2c",
-    storageBucket: "licenta-d0d2c.appspot.com",
-    messagingSenderId: "908408780707",
-    appId: "1:908408780707:web:2e61cf2010a2912817cc16"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db=getFirestore(app)
-const auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(ReactNativeAsyncStorage)
-});
 
 
 function SignUp(){
@@ -97,12 +73,6 @@ function SignUp(){
             try {
                 const response = await axios.post('http://192.168.100.64:8085/users/signUp', userData);
                 if (response.status === 201) {
-                    const auth = getAuth();
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-                    await sendEmailVerification(userCredential.user);
-                    await setDoc(doc(db, "Users", userCredential.user.uid), userData);
-                    console.log('User registered with email:', email);
                     Alert.alert(
                         "Success",
                         "Your account has been created successfully",
