@@ -116,6 +116,13 @@ module.exports = StyleSheet.create({
         alignSelf: 'flex-start',
         fontSize: SIZES.normal,
     },
+    medium_text:{
+        fontSize:SIZES.medium,
+        color:COLORS.yellow,
+        fontWeight:'normal',
+        fontFamily:FONT.medium
+    },
+
 
 });
 
