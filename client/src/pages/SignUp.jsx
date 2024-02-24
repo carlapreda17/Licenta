@@ -7,7 +7,7 @@ import CustomButton from "../components/CustomButton";
 import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios"
-
+import { API_URL } from '@env';
 
 
 
@@ -71,7 +71,7 @@ function SignUp(){
                 telefon: phone,
             };
             try {
-                const response = await axios.post('http://192.168.100.64:8085/users/signUp', userData);
+                const response = await axios.post(`${API_URL}/users/signUp`, userData);
                 if (response.status === 201) {
                     Alert.alert(
                         "Success",

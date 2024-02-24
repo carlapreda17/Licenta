@@ -8,6 +8,8 @@ import SocialMediaButton from "../components/SocialMediaButton";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios";
 import {COLORS,FONT,SIZES} from "../../constants/theme";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '@env';
 
 
 function Login(){
@@ -24,10 +26,12 @@ function Login(){
             parola: password,
         };
         try {
-            const response = await axios.post('http://192.168.100.64:8085/auth/login', loginData);
+            const response = await axios.post(`${API_URL}/auth/login`, loginData);
             if(response.status === 200) {
                 const {data: {data:{email, telefon,token, username}}} =response;
-                navigation.navigate('HomePage');
+                await AsyncStorage.setItem('userToken', token);
+                await AsyncStorage.setItem('userDetails', JSON.stringify({email, telefon, username}));
+                navigation.navigate('HomePage')
             }
         } catch (error) {
             Alert.alert("Login Failed", "Username or password is incorrect");
