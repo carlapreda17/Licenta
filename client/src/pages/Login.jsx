@@ -26,7 +26,7 @@ function Login(){
         try {
             const response = await axios.post('http://192.168.100.64:8085/auth/login', loginData);
             if(response.status === 200) {
-
+                const {data: {data:{email, telefon,token, username}}} =response;
                 navigation.navigate('HomePage');
             }
         } catch (error) {
