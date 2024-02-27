@@ -7,6 +7,7 @@ import Logo from '../../assets/images/SplitScreen.png'
 import {COLORS,FONT,SIZES} from "../../constants/theme";
 import DotsMenu from "../components/DotsMenu";
 import Header from "../components/Header";
+import {MenuProvider} from "react-native-popup-menu";
 
 const HomePage = () => {
     const [userDetails, setUserDetails] = useState(null);
@@ -47,14 +48,16 @@ const HomePage = () => {
 
     return (
         <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={height<750}>
+            <MenuProvider>
         <View style={s.container}>
-            <Header username={userDetails.username}></Header>
-            <Image source={Logo} style={[styles.logo,{height:height * 0.125},{marginTop: 30},{marginBottom:30}]} resizeMode="contain"></Image>
+            <Header user={userDetails}></Header>
+                <Image source={Logo} style={[styles.logo,{height:height * 0.125},{marginTop: 30},{marginBottom:30}]} resizeMode="contain"></Image>
            <View style={styles.container_buttons}>
                <CustomButton text={'Scan bill'}></CustomButton>
                <CustomButton text={'View history'}></CustomButton>
            </View>
         </View>
+            </MenuProvider>
         </ScrollView>
     );
 };

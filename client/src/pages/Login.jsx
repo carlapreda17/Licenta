@@ -32,6 +32,8 @@ function Login(){
                 await AsyncStorage.setItem('userToken', token);
                 await AsyncStorage.setItem('userDetails', JSON.stringify({email, telefon, username}));
                 navigation.navigate('HomePage')
+                setUsername('')
+                setPassword('')
             }
         } catch (error) {
             Alert.alert("Login Failed", "Username or password is incorrect");
