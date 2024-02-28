@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {View, Text, ScrollView, useWindowDimensions, StyleSheet, Image} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from "../components/useAuth";
 import CustomButton from "../components/CustomButton";
@@ -8,18 +9,24 @@ import {COLORS,FONT,SIZES} from "../../constants/theme";
 import DotsMenu from "../components/DotsMenu";
 import Header from "../components/Header";
 import {MenuProvider} from "react-native-popup-menu";
+import {Camera} from "expo-camera";
+import CameraScreen from "./CameraScreen";
 
 const HomePage = () => {
     const [userDetails, setUserDetails] = useState(null);
-    const isAuthenticated = useAuth();
     const [isLoading, setIsLoading] = useState(true);
+    const [openCamera,setOpenCamera]=useState(false);
+    const [hasPermission, setHasPermission] = useState(null);
+    const isAuthenticated = useAuth();
     const s=require('../../styles')
     const height = useWindowDimensions().height;
+    const navigation = useNavigation();
 
     useEffect(() => {
         if (!isAuthenticated) {
             return;
         }
+
         const fetchUserData = async () => {
             setIsLoading(true);
             try {
@@ -28,9 +35,8 @@ const HomePage = () => {
                     const userDetails = JSON.parse(userDetailsString);
                     setUserDetails(userDetails);
                 } else {
-                    // Dacă nu există detalii ale utilizatorului, gestionează acest caz (de exemplu, afișează un mesaj sau navighează înapoi la Login)
                     console.log('No user details found');
-                    // navigation.navigate('Login'); // Opțional, depinde de fluxul aplicației tale
+                    navigation.navigate('Login');
                 }
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
@@ -42,8 +48,12 @@ const HomePage = () => {
 
     }, [isAuthenticated]);
 
+    const handleScanBill  = () => {
+        navigation.navigate('CameraScreen');
+    }
+
     if (!isAuthenticated || !userDetails) {
-        return <View><Text>Loading user details...</Text></View>;
+        return <View><Text style={s.title}>Loading user details...</Text></View>;
     }
 
     return (
@@ -52,10 +62,11 @@ const HomePage = () => {
         <View style={s.container}>
             <Header user={userDetails}></Header>
                 <Image source={Logo} style={[styles.logo,{height:height * 0.125},{marginTop: 30},{marginBottom:30}]} resizeMode="contain"></Image>
-           <View style={styles.container_buttons}>
-               <CustomButton text={'Scan bill'}></CustomButton>
-               <CustomButton text={'View history'}></CustomButton>
-           </View>
+            <View style={styles.container_buttons}>
+                <CustomButton text={'Scan bill'} onPress={handleScanBill}></CustomButton>
+                <CustomButton text={'View history'}></CustomButton>
+
+            </View>
         </View>
             </MenuProvider>
         </ScrollView>
