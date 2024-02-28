@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useAuth from "../components/useAuth";
 import CustomButton from "../components/CustomButton";
 import Logo from '../../assets/images/SplitScreen.png'
+import SVG3 from '../../assets/images/SplitScreen.png'
 import {COLORS,FONT,SIZES} from "../../constants/theme";
 import DotsMenu from "../components/DotsMenu";
 import Header from "../components/Header";
@@ -61,7 +62,7 @@ const HomePage = () => {
             <MenuProvider>
         <View style={s.container}>
             <Header user={userDetails}></Header>
-                <Image source={Logo} style={[styles.logo,{height:height * 0.125},{marginTop: 30},{marginBottom:30}]} resizeMode="contain"></Image>
+                <Image source={SVG3} style={[styles.logo,{marginTop: 30},{marginBottom:30}]} resizeMode="contain"></Image>
             <View style={styles.container_buttons}>
                 <CustomButton text={'Scan bill'} onPress={handleScanBill}></CustomButton>
                 <CustomButton text={'View history'}></CustomButton>
@@ -79,6 +80,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width:'100%',
         flex:1
+    },
+    logo:{
+        width:'70%',
+        height:150,
+        maxWidth:500,
+        maxHeight:200,
+        marginTop:30
+
     },
 
 

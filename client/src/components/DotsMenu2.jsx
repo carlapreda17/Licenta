@@ -21,10 +21,10 @@ function DotsMenu2({userD}) {
 
             <View style={styles.container}>
                 <Menu opened={menuOpen} onBackdropPress={() => setMenuOpen(false)}>
-                    <MenuTrigger onPress={() => setMenuOpen(true)} style={styles.menu_btn}>
+                    <MenuTrigger  onPress={() => setMenuOpen(true)} style={styles.menu_btn}>
                         <Text style={styles.dots}>⋮</Text>
                     </MenuTrigger>
-                    <MenuOptions optionsContainerStyle={[styles.menu,{marginTop:-menuTopPosition, marginRight: -menuRightPosition, width: menuWidth}]}>
+                    <MenuOptions customStyles={{optionWrapper: { padding: 5}, optionText: styles.text}}>
                         <MenuOption onSelect={() => {logout(); setMenuOpen(false);}}>
                             <View style={styles.menuOption}>
                                 <Text style={styles.optionText}>Log out</Text>
@@ -57,13 +57,14 @@ const styles = StyleSheet.create({
     },
     menu: {
         backgroundColor: COLORS.lightGray,
-        borderRadius: 10, // This applies the border radius to all sides
+        borderRadius: 10,
         padding: 10,
-        marginRight: 10, // Increase this to push the menu further from the right edge if needed
+        marginRight: 10,
         zIndex:100,
-
-
-
+        position:'absolute',
+        top:0,
+        left:20
+        
     },
     menuOption: {
         paddingVertical: 10,

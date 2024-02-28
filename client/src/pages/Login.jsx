@@ -1,5 +1,7 @@
 import {Image, ScrollView, StatusBar, StyleSheet, Text, useWindowDimensions, View,Alert} from "react-native";
 import Logo from '../../assets/images/SplitScreen.png'
+import SVG1 from '../../assets/images/SplitScreen.png'
+import SVG3 from '../../assets/images/SplitScreen.png'
 import CustomInput from '../components/Input'
 import React from "react";
 import {useState} from 'react'
@@ -64,7 +66,7 @@ function Login(){
     return (
         <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={height<750}>
             <View style={s.container}>
-                <Image source={Logo} style={[styles.logo,{height:height * 0.3}]} resizeMode="contain"></Image>
+                <Image source={SVG3} style={[styles.logo,{height:height * 0.3}]} resizeMode="contain"></Image>
                 <CustomInput placeholder="Username" value={username} setValue={setUsername} type='account'></CustomInput>
                 <CustomInput placeholder="Password" value={password} setValue={setPassword} secureTextEntry={!showPassword} onToggleShowPassword={togglePasswordVisibility} type='lock-outline'></CustomInput>
                 <CustomButton text={'Sign In'} onPress={onSignInPressed}></CustomButton>

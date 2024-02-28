@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from "../components/CustomButton";
 import {COLORS, FONT, SIZES} from "../../constants/theme";
+import s from "../../styles";
 
 const CameraScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
@@ -30,10 +31,10 @@ const CameraScreen = () => {
     }
 
     if (hasPermission === null) {
-        return <View><Text>Requesting camera permission...</Text></View>;
+        return <View style={s.container}><Text style={s.title}>Requesting camera permission...</Text></View>;
     }
     if (hasPermission === false) {
-        return <View><Text>No access to camera</Text></View>;
+        return <View style={s.container}><Text style={s.title}>No access to camera</Text></View>;
     }
 
     return (
