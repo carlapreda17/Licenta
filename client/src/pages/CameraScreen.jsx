@@ -23,7 +23,7 @@ const CameraScreen = () => {
     const takePicture = async () => {
         if (camera) {
             const photo = await camera.takePictureAsync();
-            navigation.navigate('PhotoPreview', { photoUri: photo.uri });
+            navigation.navigate('TextPreview', { photoUri: photo.uri });
         }
     };
     const onClose = () => {
