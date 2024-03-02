@@ -1,15 +1,15 @@
-const Utilizator = require('./models/Utilizator');
+const User = require('./models/User');
 const Receipt = require('./models/Receipt');
 
-Receipt.belongsTo(Utilizator, {
+Receipt.belongsTo(User, {
     foreignKey: 'id_utilizator'
 });
 
-Utilizator.hasMany(Receipt, {
+User.hasMany(Receipt, {
     foreignKey: 'id_utilizator'
 });
 
 module.exports = {
-    Utilizator,
+    Utilizator: User,
     Receipt
 };

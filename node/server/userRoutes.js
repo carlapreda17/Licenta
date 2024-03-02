@@ -3,21 +3,21 @@ const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-const Utilizator = require('../database/models/Utilizator');
+const User = require('../database/models/User');
 
 router.post('/signUp', async (req, res) => {
     try {
         const {username, parola, email, telefon} = req.body;
 
 
-        const existaUserNume = await Utilizator.findOne({
+        const existaUserNume = await User.findOne({
             where: { username: username }
         });
         if (existaUserNume) {
             return res.status(409).json({ success: false,field:'username', message: "Username already in use." });
         }
 
-        const existaUserEmail = await Utilizator.findOne({
+        const existaUserEmail = await User.findOne({
             where: {
                 'email': email
             }
@@ -57,7 +57,7 @@ router.post('/signUp', async (req, res) => {
              return res.status(400).json({success: false, message: "The sent data is invalid.", errors: errors});
          }
 
-        await Utilizator.create({
+        await User.create({
             username,
             parola: hash,
             email,

@@ -13,7 +13,7 @@ const Receipt = sequelize.define('Receipts', {
     id_utilizator: {
         type: Sequelize.INTEGER,
         references: {
-            model: 'Utilizatori',
+            model: 'Users',
             key: 'id_utilizator',
         }
     },

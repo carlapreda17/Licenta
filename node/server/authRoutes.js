@@ -4,13 +4,13 @@ const jwt= require('jsonwebtoken');
 
 const router = express.Router();
 
-const Utilizator = require('../database/models/Utilizator');
+const User = require('../database/models/User');
 
 router.post('/login', async(req, res) => {
     try {
         const {username, parola} = req.body;
 
-        const user = await Utilizator.scope(null).findOne({
+        const user = await User.scope(null).findOne({
             where: {
                 username: username
             }
