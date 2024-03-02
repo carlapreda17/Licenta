@@ -10,6 +10,6 @@ User.hasMany(Receipt, {
 });
 
 module.exports = {
-    Utilizator: User,
+    User,
     Receipt
 };
