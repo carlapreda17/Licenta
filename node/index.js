@@ -4,6 +4,7 @@ require('dotenv').config();
 const port = process.env.PORT;
 const tesseract = require("node-tesseract-ocr")
 
+
 const app = express();
 app.use(express.json());
 app.use(cors({
@@ -30,6 +31,8 @@ app.listen(port, ()=> {
  * @input data - the document to be uploaded (PDF, PNG, JPG, JPEG) (mime)
  */
 app.get('/test', function() {
+    const imagePath = "img2.jpeg";
+    const processedImagePath = "processed_img2.jpeg";
     const config = {
         lang: "eng",
         oem: 1,
@@ -38,7 +41,7 @@ app.get('/test', function() {
     }
 
     tesseract
-        .recognize("image.jpeg", config)
+        .recognize("img2.jpeg", config)
         .then((text) => {
             console.log("Result:", text)
         })

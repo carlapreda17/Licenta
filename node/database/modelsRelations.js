@@ -1,14 +1,15 @@
-const Document = require('models/Document');
-const Utilizator = require('models/Utilizator');
+const Utilizator = require('./models/Utilizator');
+const Receipt = require('./models/Receipt');
 
-Utilizator.belongsToMany(Document, {
-    through: DocumentUser,
-    foreignKey: 'user_id',
-    otherKey: 'document_id'
+Receipt.belongsTo(Utilizator, {
+    foreignKey: 'id_utilizator'
 });
 
-Document.belongsToMany(User, {
-    through: DocumentUser,
-    foreignKey: 'document_id',
-    otherKey: 'user_id'
+Utilizator.hasMany(Receipt, {
+    foreignKey: 'id_utilizator'
 });
+
+module.exports = {
+    Utilizator,
+    Receipt
+};

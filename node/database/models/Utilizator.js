@@ -12,7 +12,6 @@ const Utilizator = sequelize.define('Utilizatori', {
     email: Sequelize.STRING,
     telefon: Sequelize.STRING
 }, {
-
     tableName: 'Utilizatori',
     timestamps: false,
 });
