@@ -4,6 +4,7 @@ require('dotenv').config();
 const port = process.env.PORT;
 const tesseract = require("node-tesseract-ocr")
 
+const Receipt = require('./database/models/Receipt');
 
 const app = express();
 app.use(express.json());
