@@ -1,5 +1,8 @@
 const express = require('express');
 const multer=require('multer');
+const tesseract = require("node-tesseract-ocr")
+const sharp=require('sharp');
+
 
 
 const router = express.Router();
@@ -25,8 +28,41 @@ router.post('/upload', upload.single('photo'), async (req, res) => {
 
     const userId = req.body.id
     const filePath = req.file.path;
+    const modifiedFilePath = 'uploads/modified-' + req.file.filename;
 
     console.log('Calea fișierului:', filePath)
+
+    sharp(filePath)
+        .rotate(90)
+        .resize(1000)
+        .threshold()
+        .sharpen()
+        .modulate({
+            contrast: 1.5,
+        })
+        .toFile(modifiedFilePath, function(err) {
+            if (err) {
+                console.error('Error occurred while rotating image:', err);
+            } else {
+                console.log('Image rotated successfully.');
+            }
+        });
+
+        const config = {
+            lang: "eng",
+            oem: 1,
+            psm: 3
+        };
+
+        tesseract.recognize(modifiedFilePath, config)
+            .then((text) => {
+                console.log("Result:", text);
+
+            })
+            .catch((error) => {
+                console.log("Error:", error.message);
+            });
+
     try {
         const newReceipt = await Receipt.create({
             path: filePath,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from "../components/CustomButton";
@@ -43,7 +43,7 @@ const CameraScreen = ({route}) => {
                 },
             });
             if (response.status === 201) {
-                console.log('response:', response.data);
+               Alert.alert('Poza a fost realizata cu succes!')
             }
         } catch (error) {
             if (error.response && error.response.data) {
@@ -59,6 +59,7 @@ const CameraScreen = ({route}) => {
         if (camera) {
             const photo = await camera.takePictureAsync();
             await uploadPhoto(photo.uri);
+            navigation.navigate('TextPreview');
         }
     };
     const onClose = () => {

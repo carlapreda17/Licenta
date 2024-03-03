@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const port = process.env.PORT;
-const tesseract = require("node-tesseract-ocr")
 
 
 
@@ -16,6 +15,7 @@ app.use(cors({
 const userRoutes = require('./server/userRoutes');
 const authRoutes = require('./server/authRoutes');
 const dataRoutes = require('./server/dataRoutes');
+const tesseract = require("node-tesseract-ocr");
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/data', dataRoutes);
@@ -42,7 +42,7 @@ app.get('/test', function() {
     }
 
     tesseract
-        .recognize("img2.jpeg", config)
+        .recognize('imgTest.jpeg', config)
         .then((text) => {
             console.log("Result:", text)
         })
