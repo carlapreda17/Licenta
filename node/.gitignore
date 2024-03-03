@@ -5,7 +5,7 @@ node_modules/
 database/database.sqlite
 package-lock.json
 .env
-
+/uploads
 
 # Expo
 .expo/

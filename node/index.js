@@ -4,7 +4,7 @@ require('dotenv').config();
 const port = process.env.PORT;
 const tesseract = require("node-tesseract-ocr")
 
-const Receipt = require('./database/models/Receipt');
+
 
 const app = express();
 app.use(express.json());
@@ -15,8 +15,10 @@ app.use(cors({
 
 const userRoutes = require('./server/userRoutes');
 const authRoutes = require('./server/authRoutes');
+const dataRoutes = require('./server/dataRoutes');
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/data', dataRoutes);
 
 /**
  *
@@ -32,8 +34,6 @@ app.listen(port, ()=> {
  * @input data - the document to be uploaded (PDF, PNG, JPG, JPEG) (mime)
  */
 app.get('/test', function() {
-    const imagePath = "img2.jpeg";
-    const processedImagePath = "processed_img2.jpeg";
     const config = {
         lang: "eng",
         oem: 1,

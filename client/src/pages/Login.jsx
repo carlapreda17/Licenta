@@ -30,9 +30,9 @@ function Login(){
         try {
             const response = await axios.post(`${API_URL}/auth/login`, loginData);
             if(response.status === 200) {
-                const {data: {data:{email, telefon,token, username}}} =response;
+                const {data: {data:{email, telefon,token, username,id_utilizator}}} =response;
                 await AsyncStorage.setItem('userToken', token);
-                await AsyncStorage.setItem('userDetails', JSON.stringify({email, telefon, username}));
+                await AsyncStorage.setItem('userDetails', JSON.stringify({email, telefon, username,id_utilizator}));
                 navigation.navigate('HomePage')
                 setUsername('')
                 setPassword('')

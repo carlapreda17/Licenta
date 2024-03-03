@@ -17,10 +17,10 @@ const Receipt = sequelize.define('Receipts', {
             key: 'id_utilizator',
         }
     },
-    data: Sequelize.DATE,
+
 }, {
     tableName: 'Receipts',
-    timestamps: false,
+
 });
 
 module.exports = Receipt;

@@ -4,13 +4,17 @@ import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from "../components/CustomButton";
 import {COLORS, FONT, SIZES} from "../../constants/theme";
+import {API_URL} from "@env";
 import s from "../../styles";
+import axios from "axios";
 
-const CameraScreen = () => {
+
+const CameraScreen = ({route}) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setCamera] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
     const navigation = useNavigation();
+    const { userDetails } = route.params;
     const s=require('../../styles')
 
     useEffect(() => {
@@ -20,10 +24,41 @@ const CameraScreen = () => {
         })();
     }, []);
 
+    const uploadPhoto = async (photoUri) => {
+        const formData = new FormData();
+        let localUri = photoUri;
+        let filename = localUri.split('/').pop();
+
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        console.log(userDetails);
+
+        formData.append('photo', { uri: localUri, name: filename, type});
+        formData.append('id', userDetails.id_utilizator);
+        try {
+            const response = await axios.post(`${API_URL}/data/upload`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.status === 201) {
+                console.log('response:', response.data);
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                console.error("Eroare de la server:", error.response.data.message);
+            } else if (error.request) {
+                console.error("Cererea a fost trimisă, dar nu s-a primit niciun răspuns");
+            } else {
+                console.error("Eroare la crearea cererii:", error.message);
+            }
+        }
+    };
     const takePicture = async () => {
         if (camera) {
             const photo = await camera.takePictureAsync();
-            navigation.navigate('TextPreview', { photoUri: photo.uri });
+            await uploadPhoto(photo.uri);
         }
     };
     const onClose = () => {

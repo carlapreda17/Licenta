@@ -50,7 +50,7 @@ const HomePage = () => {
     }, [isAuthenticated]);
 
     const handleScanBill  = () => {
-        navigation.navigate('CameraScreen');
+        navigation.navigate('CameraScreen',{ userDetails: userDetails });
     }
 
     if (!isAuthenticated || !userDetails) {
