@@ -58,7 +58,6 @@ function ResetPassword({route}) {
            }
            try{
                const response= await  axios.put(`${API_URL}/auth/reset-password`, resetData)
-               console.log(response)
                if(response.status===200){
                    Alert.alert('Password reset successfully')
                    navigation.goBack()
