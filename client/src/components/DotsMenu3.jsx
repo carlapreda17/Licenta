@@ -14,6 +14,10 @@ function DotsMenu3({userD}){
         AsyncStorage.clear().then(r =>  navigation.navigate('Login'));
     }
 
+    const resetPassword = () => {
+        navigation.navigate('ResetPassword',{ userDetails: userD});
+    }
+
     return (
             <Menu>
                 <MenuTrigger
@@ -46,7 +50,7 @@ function DotsMenu3({userD}){
                     </MenuOption>
                     <Divider />
                     <MenuOption
-                        onSelect={() => {alert(`Delete`); setMenuOpen(false);}}
+                        onSelect={() => {resetPassword(); setMenuOpen(false);}}
                         customStyles={{
                             optionWrapper: {
                                 flexDirection: "row",

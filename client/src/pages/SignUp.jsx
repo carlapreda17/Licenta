@@ -19,7 +19,6 @@ function SignUp(){
     const [showPassword, setShowPassword] = useState(false);
     const windowHeight = useWindowDimensions().height;
     const navigation = useNavigation()
-    // State pentru erori
     const [errors, setErrors] = useState({});
     const s=require('../../styles')
 
