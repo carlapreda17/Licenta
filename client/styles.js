@@ -122,6 +122,13 @@ module.exports = StyleSheet.create({
         fontWeight:'normal',
         fontFamily:FONT.medium
     },
+    large_text:{
+        fontSize:SIZES.large,
+        color:COLORS.yellow,
+        fontWeight:'normal',
+        fontFamily:FONT.medium
+    },
+
 
 
 });

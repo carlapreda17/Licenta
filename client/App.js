@@ -14,7 +14,7 @@ import SignUp from "./src/pages/SignUp";
 import CameraScreen from "./src/pages/CameraScreen";
 import Src from "@react-native-async-storage/async-storage/src";
 import PhotoPreview from "./src/pages/PhotoPreview";
-import TextPreview from "./src/pages/TextPreview";
+import BillPreview from "./src/pages/BillPreview";
 import ResetPassword from "./src/pages/ResetPassword";
 
 const Stack = createStackNavigator();
@@ -51,7 +51,7 @@ export default function App() {
                             <Stack.Screen name="HomePage" component={HomePage}/>
                             <Stack.Screen name='ResetPassword' component={ResetPassword}/>
                             <Stack.Screen name='CameraScreen' component={CameraScreen}/>
-                            <Stack.Screen name='TextPreview' component={TextPreview}/>
+                            <Stack.Screen name='BillPreview' component={BillPreview}/>
                             <Stack.Screen name="SignUp" component={SignUp}/>
                             <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
                         </Stack.Navigator>

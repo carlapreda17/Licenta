@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '100%',
-        paddingTop:20
+        paddingTop:10
     },
 });
 export default GoBack;

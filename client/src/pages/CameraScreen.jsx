@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, StyleSheet, Button, TouchableOpacity, Alert,ActivityIndicator} from 'react-native';
 import { Camera } from 'expo-camera';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from "../components/CustomButton";
@@ -10,6 +10,7 @@ import axios from "axios";
 
 
 const CameraScreen = ({route}) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
     const [camera, setCamera] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
@@ -25,14 +26,13 @@ const CameraScreen = ({route}) => {
     }, []);
 
     const uploadPhoto = async (photoUri) => {
+        setIsLoading(true);
         const formData = new FormData();
         let localUri = photoUri;
         let filename = localUri.split('/').pop();
 
         let match = /\.(\w+)$/.exec(filename);
         let type = match ? `image/${match[1]}` : `image`;
-
-        console.log(userDetails);
 
         formData.append('photo', { uri: localUri, name: filename, type});
         formData.append('id', userDetails.id_utilizator);
@@ -43,7 +43,8 @@ const CameraScreen = ({route}) => {
                 },
             });
             if (response.status === 201) {
-               Alert.alert('Poza a fost realizata cu succes!')
+               Alert.alert('Poza a fost realizata cu succes!');
+               return response.data.data;
             }
         } catch (error) {
             if (error.response && error.response.data) {
@@ -53,13 +54,15 @@ const CameraScreen = ({route}) => {
             } else {
                 console.error("Eroare la crearea cererii:", error.message);
             }
+        }finally {
+            setIsLoading(false);
         }
     };
     const takePicture = async () => {
         if (camera) {
             const photo = await camera.takePictureAsync();
-            await uploadPhoto(photo.uri);
-            navigation.navigate('TextPreview');
+            let data=await uploadPhoto(photo.uri);
+            navigation.navigate('BillPreview',{photoUri: photo.uri, userDetails: userDetails,data:data});
         }
     };
     const onClose = () => {
@@ -104,6 +107,9 @@ const CameraScreen = ({route}) => {
                         <Text style={styles.text}>Close</Text>
                     </TouchableOpacity>
                 </View>
+                {isLoading && (
+                    <ActivityIndicator size="large" color="#222831" />
+                )}
             </Camera>
         </View>
     );
