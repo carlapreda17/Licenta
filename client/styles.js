@@ -65,6 +65,7 @@ module.exports = StyleSheet.create({
         fontSize:SIZES.medium,
         fontFamily:FONT.regular,
         paddingLeft:40,
+        width:'100%'
     },
     input_container:{
         backgroundColor:COLORS.white,

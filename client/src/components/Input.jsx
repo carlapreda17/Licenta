@@ -8,7 +8,7 @@ import {Svg, Path} from "react-native-svg";
 import {COLORS, FONT, SIZES} from "../../constants/theme";
 
 
-function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword,type }) {
+function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPassword,type,isSmall}) {
 
     const styles=require('../../styles')
 
@@ -20,7 +20,10 @@ function Input({ value, setValue, placeholder, secureTextEntry, onToggleShowPass
                 onChangeText={setValue}
                 style={styles.input_text}
                 placeholder={placeholder}
+                placeholderTextColor={COLORS.gray}
                 secureTextEntry={secureTextEntry}
+                maxLength={isSmall ? 15 : undefined}
+
             />
             {placeholder.toLowerCase().includes('password') && (
                 <MaterialCommunityIcons

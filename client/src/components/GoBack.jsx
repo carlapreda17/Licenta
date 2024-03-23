@@ -3,8 +3,9 @@ import {ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, Vie
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {COLORS} from "../../constants/theme";
 import {useNavigation} from "@react-navigation/native";
+import s from "../../styles";
 
-function GoBack() {
+function GoBack({text}) {
     const s=require('../../styles')
     const navigation = useNavigation()
     return (
@@ -12,6 +13,7 @@ function GoBack() {
             <TouchableOpacity>
                 <MaterialCommunityIcons name={'arrow-left'} size={40} color={COLORS.yellow} onPress={()=>navigation.goBack()}/>
             </TouchableOpacity>
+            <Text style={s.large_text}>{text}</Text>
         </View>
 
     );
