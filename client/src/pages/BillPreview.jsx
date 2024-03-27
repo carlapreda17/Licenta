@@ -17,6 +17,7 @@ import s from "../../styles";
 import CustomButton from "../components/CustomButton";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Input from "../components/Input";
+import Dropdown from "../components/Dropdown";
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -24,12 +25,30 @@ const BillPreview = ({ route }) => {
     const { items,total } = route.params.data;
     const [modalVisible, setModalVisible] = useState(false);
     const [name, setName] = useState('');
+    const [dropdownData, setDropdownData] = useState([{
+        value: '1',
+        label: 'Eu',
+        icon: 'account',
+    }]);
+
 
     const s=require('../../styles');
 
     const toggleModal =()=>{
         setModalVisible(!modalVisible)
         setName("")
+    }
+    const addPerson =() =>{
+        const newPerson = {
+            value: `${dropdownData.length + 1}`, // sau orice altă logică pentru a asigura o valoare unică
+            label:name, // Numele introdus de utilizator,
+            icon:'account',
+
+
+        };
+
+        setDropdownData(prevData => [...prevData, newPerson]);
+        toggleModal();
     }
 
 
@@ -40,6 +59,9 @@ const BillPreview = ({ route }) => {
                 <Text style={[s.medium_text]}>Adauga partener</Text>
                 <MaterialCommunityIcons style={styles.plus_circle} name={'plus-circle'} size={30} color={COLORS.yellow}/>
             </TouchableOpacity>
+            <View style={styles.dropdown_wrapper}>
+                <Dropdown data={dropdownData}></Dropdown>
+            </View>
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -58,7 +80,7 @@ const BillPreview = ({ route }) => {
                                 <MaterialCommunityIcons name={'close'} size={24} color={COLORS.background}/>
                             </TouchableOpacity>
                             <CustomInput placeholder="Nume" value={name} setValue={setName} type='account-edit' isSmall={true}></CustomInput>
-                            <TouchableOpacity style={styles.add_button}>
+                            <TouchableOpacity style={styles.add_button} onPress={addPerson}>
                                 <Text style={styles.add_text}>Adauga</Text>
                             </TouchableOpacity>
                         </View>
@@ -160,6 +182,14 @@ const styles = StyleSheet.create({
         marginHorizontal:20,
         marginTop:30,
         marginBottom:10,
+    },
+    dropdown_wrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems:'center',
+        alignSelf:'flex-start',
+        marginHorizontal:20,
+        marginTop:10,
     },
     plus_circle:{
         paddingLeft:10
