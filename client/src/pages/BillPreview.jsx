@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+    Animated,
     View,
     Image,
     Text,
@@ -8,7 +9,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Modal,
-    TextInput, Dimensions, KeyboardAvoidingView
+    TextInput, Dimensions, KeyboardAvoidingView, useWindowDimensions
 } from 'react-native';
 import GoBack from "../components/GoBack";
 import CustomInput from "../components/Input";
@@ -18,13 +19,18 @@ import CustomButton from "../components/CustomButton";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Input from "../components/Input";
 import Dropdown from "../components/Dropdown";
+import { Swipeable } from 'react-native-gesture-handler';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 
 const BillPreview = ({ route }) => {
+    const {height}=useWindowDimensions()
     const { items,total } = route.params.data;
     const [modalVisible, setModalVisible] = useState(false);
     const [name, setName] = useState('');
+    const [totalPrice, setTotalPrice] = useState(total);
+    const [itemsList, setItemsList] = useState(items);
     const [dropdownData, setDropdownData] = useState([{
         value: '1',
         label: 'Eu',
@@ -50,9 +56,20 @@ const BillPreview = ({ route }) => {
         setDropdownData(prevData => [...prevData, newPerson]);
         toggleModal();
     }
+    const handleDelete = (itemToDelete) => {
+        setItemsList((currentItems) => {
+            const filteredItems = currentItems.filter((item) => item.name !== itemToDelete.name);
+            return filteredItems;
+        });
 
+        setTotalPrice((currentTotal) => {
+            const newTotal = currentTotal - parseFloat(itemToDelete.price);
+            return newTotal.toFixed(2);
+        });
+    }
 
     return (
+        <ScrollView showsVerticalScrollIndicator={true} scrollEnabled={height<750}>
         <View style={s.container}>
             <GoBack text={"Detalii bon"}/>
             <TouchableOpacity style={styles.details_wrapper} onPress={toggleModal}>
@@ -89,24 +106,34 @@ const BillPreview = ({ route }) => {
             </Modal>
             <View style={styles.bill_wrapper}>
                 <ScrollView showsVerticalScrollIndicator={true}>
-                    {items.map((item) => (
-                        <View key={item.name} style={styles.items_wrapper}>
-                            <Text style={[styles.text_items,styles.text]} numberOfLines={2} ellipsizeMode="tail">
-                                {item.name}
-                            </Text>
-                            <Text style={[styles.text_prices,styles.text]}>
-                                {item.price}
-                            </Text>
-                        </View>
+                    {itemsList.map((item) => (
+                        <Swipeable
+                            key={item.name}
+                            renderLeftActions={() => (
+                                <TouchableOpacity style={styles.delete_wrapper} onPress={() => handleDelete(item)}>
+                                   <MaterialCommunityIcons name={"delete-circle"} size={35} color={COLORS.red}></MaterialCommunityIcons>
+                                </TouchableOpacity>
+                            )}
+                        >
+                            <View style={styles.items_wrapper}>
+                                <Text style={[styles.text_items,styles.text]} numberOfLines={2} ellipsizeMode="tail">
+                                    {item.name}
+                                </Text>
+                                <Text style={[styles.text_prices,styles.text]}>
+                                    {item.price}
+                                </Text>
+                            </View>
+                        </Swipeable>
                     ))}
                 </ScrollView>
-                <Text style={styles.text_total}>Total: {total}</Text>
+                <Text style={styles.text_total}>Total: {totalPrice}</Text>
                 <View style={styles.button_container}>
                     <CustomButton text={"Calculeaza"} style={s.text_btn_primary} onPress={() => {}}/>
                 </View>
             </View>
 
         </View>
+            </ScrollView>
     );
 };
 
@@ -190,6 +217,13 @@ const styles = StyleSheet.create({
         alignSelf:'flex-start',
         marginHorizontal:20,
         marginTop:10,
+    },
+    delete_wrapper: {
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+
     },
     plus_circle:{
         paddingLeft:10
