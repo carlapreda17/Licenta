@@ -18,9 +18,9 @@ import s from "../../styles";
 import CustomButton from "../components/CustomButton";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Input from "../components/Input";
-import Dropdown from "../components/Dropdown";
 import { Swipeable } from 'react-native-gesture-handler';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import DropdownComponent from "../components/DropdownComponent";
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -32,9 +32,11 @@ const BillPreview = ({ route }) => {
     const [totalPrice, setTotalPrice] = useState(total);
     const [itemsList, setItemsList] = useState(items);
     const [dropdownData, setDropdownData] = useState([{
-        value: '1',
+        value: '0',
         label: 'Eu',
-        icon: 'account',
+        icon: {
+            uri:'http://www.w3.org/2000/svg',
+        },
     }]);
 
 
@@ -48,7 +50,6 @@ const BillPreview = ({ route }) => {
         const newPerson = {
             value: `${dropdownData.length + 1}`, // sau orice altă logică pentru a asigura o valoare unică
             label:name, // Numele introdus de utilizator,
-            icon:'account',
 
 
         };
@@ -77,7 +78,7 @@ const BillPreview = ({ route }) => {
                 <MaterialCommunityIcons style={styles.plus_circle} name={'plus-circle'} size={30} color={COLORS.yellow}/>
             </TouchableOpacity>
             <View style={styles.dropdown_wrapper}>
-                <Dropdown data={dropdownData}></Dropdown>
+                <DropdownComponent data={dropdownData}></DropdownComponent>
             </View>
             <Modal
                 animationType="fade"
